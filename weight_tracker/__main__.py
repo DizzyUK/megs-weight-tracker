@@ -46,4 +46,4 @@ def write_tsv(filename, data):
 
 ensure_schema()
 add_readings_to_database()
-write_tsv(sys.argv[1], (day_data(day) for day in days()))
+write_tsv(sys.argv[1], (day_data(day) for day in days() if day > date(year=2024, month=11, day=2)))
