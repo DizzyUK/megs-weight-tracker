@@ -25,3 +25,5 @@ if (!$iniConfig.ClientSecret) {
 
 test-dockerimageexists
 docker run --rm -it --mount type=bind,source="$(Get-Location)",destination=/workspace -e FITBIT_CLIENT_ID=$($iniConfig.ClientID) -e FITBIT_CLIENT_SECRET=$($iniConfig.ClientSecret) -e FITBIT_DATABASE=/workspace/fitbit.sqlite $DOCKER_IMAGE /workspace/Weight_Tracker.tsv
+
+get-content .\Weight_Tracker.tsv | Set-Clipboard
