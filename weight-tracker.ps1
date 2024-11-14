@@ -1,6 +1,18 @@
 $DOCKER_IMAGE = "megs-weight-tracker:latest"
 
 function test-dockerimageexists {
+  if (!((get-process -Name "Docker Desktop" -ErrorAction SilentlyContinue) -or (get-process -Name "com.docker.backend" -ErrorAction SilentlyContinue))) {
+    if ([System.IO.File]::Exists("C:\Program Files\Docker\Docker\Docker Desktop.exe")) {
+      write-host "Docker starting"
+      start-process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+      start-sleep -Seconds 5
+    }
+    Else {
+      write-host "Docker not installed in default location, please install Docker or start Docker if not in default location"
+      Pause
+      exit 1
+    }
+  }
   docker image inspect $DOCKER_IMAGE 2>&1 | out-null
   if ($LASTEXITCODE -ne 0) {
     write-host "Docker image does not exist: run .\setup.ps1"
