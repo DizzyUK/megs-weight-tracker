@@ -10,7 +10,7 @@ function test-dockerimageexists {
         $dockerStartAttempts++
         start-sleep -Seconds 5
         docker info 2>&1 | out-null
-      until (($dockerStartAttempts -gt 5) -or ($LASTEXITCODE -eq 0))
+      } until (($dockerStartAttempts -gt 5) -or ($LASTEXITCODE -eq 0))
     }
     Else {
       write-host "Docker not installed in default location, please install Docker or start Docker if not in default location"
