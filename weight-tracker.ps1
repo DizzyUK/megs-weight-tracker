@@ -26,18 +26,25 @@ function test-dockerimageexists {
   }
 }
 
-$iniConfig = get-content .\config.ini | Select-Object -skip 1 | ConvertFrom-StringData
+try {
+  $iniConfig = get-content .\config.ini -ErrorAction Stop | Select-Object -skip 1 | ConvertFrom-StringData
+}
+catch {
+  write-host "Config.ini not present, unable to continue, if running this from an IDE please make sure you are running this from the correct directory"
+  Pause
+  exit 1
+}
 
 if (!$iniConfig.ClientID) {
   write-host "ClientID not set, unable to continue"
   Pause
-  exit 1
+  exit 2
 }
 
 if (!$iniConfig.ClientSecret) {
   write-host "ClientSecret not set, unable to continue"
   Pause
-  exit 1
+  exit 3
 }
 
 test-dockerimageexists
